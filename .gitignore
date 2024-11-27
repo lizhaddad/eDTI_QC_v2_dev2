@@ -1,0 +1,21 @@
+
+build/*
+eDTI_outliers.egg-info/*
+
+# Ignore Python bytecode files
+*.pyc
+*.pyo
+__pycache__/
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+
+# Ignore OS-specific files (e.g., MacOS)
+.DS_Store
+.Rhistory
+
+
+# Ignore IDE files (e.g., VS Code, IntelliJ)
+.vscode/
+.idea/
