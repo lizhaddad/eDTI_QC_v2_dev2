@@ -5,6 +5,8 @@ import time
 import logging
 import pandas as pd
 import numpy as np
+from openpyxl import load_workbook
+
 # from eDTI_outliers.scripts.filtering_algorithm import *
 # from eDTI_outliers.scripts.constants import *
 import eDTI_outliers.scripts.constants as cnst
@@ -306,28 +308,28 @@ def Save_dataframe_function(combined_table_after_grouping,output_csv_folder):
     columns_with_ROI_counts=sorted([col for col in combined_table_after_grouping.columns if not col.endswith("_set")]) #Columns with only count of Outliers
 
     #For excel workbook, to save it with multiindex columns such that the resulting file will have lenient and Stringent as sub columns
-    column_sequence_counts=["Outliers_Count"]+columns_with_ROI_counts 
+    Overall_outlier_count_across_groups="Outliers_Count" #Column which shows the number of combination out of 8 where that subject satisfied the threshold.
+    column_sequence_counts=[Overall_outlier_count_across_groups]+columns_with_ROI_counts 
 
     #Count for each subject, to check how many times they were outliers across the combinations
-    combined_table_after_grouping['Outliers_Count'] = combined_table_after_grouping[columns_with_Outlier_ROI_names].apply(lambda row: row.astype(bool).sum(), axis=1)
+    combined_table_after_grouping[Overall_outlier_count_across_groups] = combined_table_after_grouping[columns_with_Outlier_ROI_names].apply(lambda row: row.astype(bool).sum(), axis=1)
 
     combined_table_after_grouping_counts=combined_table_after_grouping[column_sequence_counts].copy() #Dataframe with Counts
-    combined_table_after_grouping_names=combined_table_after_grouping[["Outliers_Count"]+columns_with_Outlier_ROI_names].copy() #Dataframe with names
+    combined_table_after_grouping_names=combined_table_after_grouping[[Overall_outlier_count_across_groups]+columns_with_Outlier_ROI_names].copy() #Dataframe with names
 
     for col in columns_with_Outlier_ROI_names:
         combined_table_after_grouping_names[col] = combined_table_after_grouping_names[col].apply(lambda x: ", ".join(x))
 
 
     multi_index_col = [
-        (col.split("+")[0],col.split("+")[1],grouping_dict_diag_site_instance.criteria_string_mapper[col.split("+")[2]]) 
-        if col != "Outliers_Count" and col!=grouping_dict_diag_site_instance.subject_col
-        else (col,'', '') 
-        for col in column_sequence_counts
+        (col.split("+")[0].replace("_"," "),col.split("+")[1].replace("_"," "),grouping_dict_diag_site_instance.criteria_string_mapper[col.split("+")[2]]) 
+        if col != Overall_outlier_count_across_groups and col!=grouping_dict_diag_site_instance.subject_col
+        else (col.replace("_"," ") if col==Overall_outlier_count_across_groups else col,'', '') 
+        for col in [grouping_dict_diag_site_instance.subject_col]+column_sequence_counts
     ]
     columns_multiIndex = pd.MultiIndex.from_tuples(
     multi_index_col,    names=['', '', '']
     )
-
 
 
     # Saving as csv file
@@ -337,11 +339,37 @@ def Save_dataframe_function(combined_table_after_grouping,output_csv_folder):
     combined_table_after_grouping_counts.to_csv(output_csv_folder+".csv")
     combined_table_after_grouping_names.to_csv(output_csv_folder+"_ROI_names.csv")
 
+    combined_table_after_grouping_counts.reset_index(inplace=True)
     #Saving as Excel Workbook
     combined_table_after_grouping_counts.columns = columns_multiIndex
+    combined_table_after_grouping_counts.reset_index(drop=True)
     writer = pd.ExcelWriter(output_csv_folder+'.xlsx', engine='xlsxwriter')
-    combined_table_after_grouping_counts.to_excel(writer)
+    combined_table_after_grouping_counts.to_excel(writer, sheet_name="Sheet1", merge_cells=True)
+
+
+    #Drop the first column which is index in our case
+    writer.sheets['Sheet1'].set_column(0, 0, None, None, {'hidden': True})
     writer.close()
+    
+    # Use openpyxl to merge cells for single-level columns
+    wb = load_workbook(output_csv_folder+'.xlsx')
+    ws = wb.active
+
+    header_levels = len(combined_table_after_grouping_counts.columns.levels)
+    # Merge cells for single-level columns in the header row
+    for col_idx, col in enumerate(combined_table_after_grouping_counts.columns, start=2):
+        merge_start_row = 1
+        merge_end_row = header_levels
+        # If column is single-level, merge across all header rows
+        if any(level == "" for level in col):  # Check if lower levels are empty
+            ws.merge_cells(start_row=merge_start_row, start_column=col_idx, end_row=merge_end_row, end_column=col_idx)
+
+
+    # Save the updated Excel file
+    wb.save(output_csv_folder+'.xlsx')
+
+
+
     logger.info("CSV saved in {}".format(output_csv_folder+"_ROI_names.csv"))
     logger.info("Excel saved in {}".format(output_csv_folder+".xlsx"))
 
@@ -419,6 +447,7 @@ def main():
 
     #Save the dataframe as CSV and excel workbook
     Save_dataframe_function(combined_table_after_grouping,output_csv_folder)
+    grouping_dict_diag_site_instance=cnst.SingletonGrouping() #The instance was already created in the input_validator, so it return the same reference
 
     
 

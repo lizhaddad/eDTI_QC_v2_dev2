@@ -17,11 +17,11 @@ ROI_columns={'ic', 'cst.l', 'pcr.r', 'ec.l', 'cr', 'alic', 'gcc', 'ss.r', 'ec', 
 class SingletonGrouping:
     _instance = None  # Class-level attribute for singleton instance
 
-    def __new__(cls, sitecol="", diagcol="",subjectcol="",quantile_lenient=[],quantile_stringent=[], threshold_1=0.1,threshold_2=0.05):
+    def __new__(self, sitecol="", diagcol="",subjectcol="",quantile_lenient=[],quantile_stringent=[], threshold_1=0.1,threshold_2=0.05):
         # Ensure only one instance is created
-        if cls._instance is None:
-            cls._instance = super(SingletonGrouping, cls).__new__(cls)
-        return cls._instance
+        if self._instance is None:
+            self._instance = super(SingletonGrouping, self).__new__(self)
+        return self._instance
 
     def __init__(self, sitecol="", diagcol="",subjectcol="",quantile_lenient=[],quantile_stringent=[], threshold_1=0.1,threshold_2=0.05):
         # Initialize attributes only once
@@ -33,9 +33,10 @@ class SingletonGrouping:
             self.quantile_lenient=quantile_lenient
             self.threshold_1=float(threshold_1)
             self.threshold_2=float(threshold_2)
+            print("***************************************************************")
             self.criteria_string_mapper={
-                                        criteria_1_string : "{}% of ROIs [{} ,{}]".format(self.threshold_1*100.0,self.quantile_stringent[0],self.quantile_stringent[1]),
-                                        criteria_2_string : "{}% of ROIs [{} ,{}]".format(self.threshold_2*100.0,self.quantile_lenient[0],self.quantile_lenient[1]),
+                                        criteria_1_string : "{}% of ROIs [{}, {}]".format(self.threshold_1*100.0,self.quantile_stringent[0],self.quantile_stringent[1]),
+                                        criteria_2_string : "{}% of ROIs [{}, {}]".format(self.threshold_2*100.0,self.quantile_lenient[0],self.quantile_lenient[1]),
                                         }
 
             self.grouping_criteria = {
@@ -46,5 +47,8 @@ class SingletonGrouping:
             }
             self.initialized = True  # Mark instance as initialized
 
+    #For resetting the instance if needed
+    def reset_instance(self):
+        self._instance = None
 
 
