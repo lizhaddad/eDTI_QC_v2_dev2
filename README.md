@@ -3,7 +3,8 @@
 ## Installation 
 
 Please follow the instructions below carefully to install the package.
-### 1. Ensure Conda is Installed.  If Conda is not installed, download and install Anaconda or Miniconda from the official website  [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html). 
+
+### 1. Ensure Conda is Installed.  If Conda is not installed, download and install Miniconda from the official website  [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html). 
 
 ### 2. Clone the repository:
   `git clone https://github.com/A2U8C/eDTI_outliers.git`
