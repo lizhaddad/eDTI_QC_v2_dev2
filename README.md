@@ -4,7 +4,6 @@
 
 Please follow the instructions below carefully to install the package.
 1. Ensure Conda is Installed.  If Conda is not installed, download and install Anaconda or Miniconda from the official website  [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html). 
-<a href="https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html" target="_blank">Link text</a>
 
 
 
