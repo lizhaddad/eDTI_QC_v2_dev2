@@ -97,16 +97,16 @@ class Filtering_Algorithm:
             else:
                 df=self.IQR_based_helper_func(df,key_i,df_ROIs_col,file_name_suffix)  #For the complete dataframe, you can replace the dataframe with the result from the function
 
-            # df[key_i+cnst.stringent_string] = df[key_i+cnst.stringent_string].where(df[key_i+cnst.stringent_string] > threshold_stringent, 0)
-            # df[key_i+cnst.lenient_string] = df[key_i+cnst.lenient_string].where(df[key_i+cnst.lenient_string] > threshold_lenient, 0)
-            # df[key_i+cnst.stringent_string+"_set"] = df.apply(
-            #             lambda row: set() if row[key_i+cnst.stringent_string] <= threshold_stringent else row[key_i+cnst.stringent_string+"_set"],
-            #             axis=1
-            #         )   
-            # df[key_i+cnst.lenient_string+"_set"] = df.apply(
-            #             lambda row: set() if row[key_i+cnst.lenient_string] <= threshold_lenient else row[key_i+cnst.lenient_string+"_set"],
-            #             axis=1
-            #         )   
+        # df[key_i+cnst.stringent_string] = df[key_i+cnst.stringent_string].where(df[key_i+cnst.stringent_string] > threshold_stringent, 0)
+        # df[key_i+cnst.lenient_string] = df[key_i+cnst.lenient_string].where(df[key_i+cnst.lenient_string] > threshold_lenient, 0)
+        # df[key_i+cnst.stringent_string+"_set"] = df.apply(
+        #             lambda row: set() if row[key_i+cnst.stringent_string] <= threshold_stringent else row[key_i+cnst.stringent_string+"_set"],
+        #             axis=1
+        #         )   
+        # df[key_i+cnst.lenient_string+"_set"] = df.apply(
+        #             lambda row: set() if row[key_i+cnst.lenient_string] <= threshold_lenient else row[key_i+cnst.lenient_string+"_set"],
+        #             axis=1
+        #         )   
 
 
         return df

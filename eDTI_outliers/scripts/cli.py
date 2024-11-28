@@ -275,6 +275,18 @@ def Combined_Table_generator(input_file_path,subject_col, demogCSV,csv_combinati
                     )
             else:
                 complete_DTI_measures_count[col]=complete_DTI_measures_count[col]+new_ROI_df[col]
+    
+    for key_i in csv_combinations_cols:
+        complete_DTI_measures_count[key_i+cnst.stringent_string] = complete_DTI_measures_count[key_i+cnst.stringent_string].where(complete_DTI_measures_count[key_i+cnst.stringent_string] > threshold_stringent, 0)
+        complete_DTI_measures_count[key_i+cnst.lenient_string] = complete_DTI_measures_count[key_i+cnst.lenient_string].where(complete_DTI_measures_count[key_i+cnst.lenient_string] > threshold_lenient, 0)
+        complete_DTI_measures_count[key_i+cnst.stringent_string+"_set"] = complete_DTI_measures_count.apply(
+                    lambda row: set() if row[key_i+cnst.stringent_string] <= threshold_stringent else row[key_i+cnst.stringent_string+"_set"],
+                    axis=1
+                )   
+        complete_DTI_measures_count[key_i+cnst.lenient_string+"_set"] = complete_DTI_measures_count.apply(
+                    lambda row: set() if row[key_i+cnst.lenient_string] <= threshold_lenient else row[key_i+cnst.lenient_string+"_set"],
+                    axis=1
+                )      
         
     
     return complete_DTI_measures_count
