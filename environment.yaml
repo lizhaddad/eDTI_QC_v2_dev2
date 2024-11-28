@@ -13,6 +13,7 @@ dependencies:
   - yaml=0.2.5
   - matplotlib=3.7.2
   - pandas=1.4.4
+  - openpyxl=3.0.7
   - numpy
   - pip=23.0.1
   - pip:
