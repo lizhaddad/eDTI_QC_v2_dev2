@@ -276,7 +276,7 @@ def Combined_Table_generator(input_file_path,subject_col, demogCSV,csv_combinati
             else:
                 complete_DTI_measures_count[col]=complete_DTI_measures_count[col]+new_ROI_df[col]
     
-    # To make sure that only those whic satisfies the threshold, else replace with 0 and empty set of ROI columns (To be done only all the DTI results are read and they contribute to Outlier count)
+    # To make sure that only those which satisfies the threshold value for 1st and 2nd; else replace with 0 and empty set of ROI columns (To be done only after all the DTI results are read and they contribute to Outlier count)
     for key_i in csv_combinations_cols:
         complete_DTI_measures_count[key_i+cnst.stringent_string] = complete_DTI_measures_count[key_i+cnst.stringent_string].where(complete_DTI_measures_count[key_i+cnst.stringent_string] > threshold_stringent, 0)
         complete_DTI_measures_count[key_i+cnst.lenient_string] = complete_DTI_measures_count[key_i+cnst.lenient_string].where(complete_DTI_measures_count[key_i+cnst.lenient_string] > threshold_lenient, 0)
