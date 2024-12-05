@@ -317,6 +317,19 @@ def Save_dataframe_function(combined_table_after_grouping,output_csv_folder):
     combined_table_after_grouping_counts=combined_table_after_grouping[column_sequence_counts].copy() #Dataframe with Counts
     combined_table_after_grouping_names=combined_table_after_grouping[[Overall_outlier_count_across_groups]+columns_with_Outlier_ROI_names].copy() #Dataframe with names
 
+    #Get array of subjects which has "Overall_outlier_count_across_groups">0
+    outlier_subjects_array=combined_table_after_grouping.index[combined_table_after_grouping[Overall_outlier_count_across_groups]>0].to_numpy()
+    outlier_subjects_string="\n".join(outlier_subjects_array)
+
+    # Write the Subjects string to the file
+    with open(output_csv_folder+"_subjects.txt", "w") as file:
+        if len(outlier_subjects_array)>0:
+            file.write("Please check the following subjects: \n"+outlier_subjects_string)
+        else:
+            file.write("No subjects were identified as outliers")
+
+
+
     for col in columns_with_Outlier_ROI_names:
         combined_table_after_grouping_names[col] = combined_table_after_grouping_names[col].apply(lambda x: ", ".join(x))
 
@@ -369,9 +382,12 @@ def Save_dataframe_function(combined_table_after_grouping,output_csv_folder):
     wb.save(output_csv_folder+'.xlsx')
 
 
-
     logger.info("CSV saved in {}".format(output_csv_folder+"_ROI_names.csv"))
     logger.info("Excel saved in {}".format(output_csv_folder+".xlsx"))
+    logger.info("Outlier subjects are listed in {}".format(output_csv_folder+"_subjects.txt"))
+
+
+   
 
 def main():
     # Output Folder Name
