@@ -10,7 +10,7 @@ Please follow the instructions below carefully to install the package.
   `git clone https://github.com/lizhaddad/eDTI_QC_v2_dev2.git`
 
 ### 3. After Miniconda has been installed, run the following command to create the environment:
-  `conda env create -f eDTI_outliers/environment.yaml`
+  `conda env create -f eDTI_QC_v2_dev2/environment.yaml`
 
 ### 4. Once the environement is created, run the following command to activate environment:
   `conda activate ENIGMA_DTI_env`
