@@ -16,4 +16,4 @@ Please follow the instructions below carefully to install the package.
   `conda activate ENIGMA_DTI_env`
 
 ### 5. After cloning (in the same directory that `git clone` was run in):
-  `pip install ./eDTI_outliers`
+  `pip install ./eDTI_QC_v2_dev2`
