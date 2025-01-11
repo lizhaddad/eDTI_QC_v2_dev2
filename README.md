@@ -1,4 +1,4 @@
-# eDTI_outliers
+# eDTI QC v2
 
 ## Installation 
 
