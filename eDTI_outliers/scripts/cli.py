@@ -350,6 +350,10 @@ def Save_dataframe_function(combined_table_after_grouping,output_csv_folder):
     multi_index_col,    names=['', '', '']
     )
 
+    new_path = os.path.join(path, "Supplementary_Outputs")
+    if not os.path.exists(new_path):
+        os.mkdir(new_path)
+
     csv_file = os.path.join(new_path, f"{prefix}_eDTI_outliers_subjects_flagged_byCriteria.csv")
     csv_roi_file = os.path.join(new_path, f"{prefix}_eDTI_outliers_ROIs_flagged_byCriteria.csv")
     excel_file = os.path.join(new_path, f"{prefix}_eDTI_outliers_subjects_flagged_byCriteria.xlsx")
@@ -385,9 +389,7 @@ def Save_dataframe_function(combined_table_after_grouping,output_csv_folder):
             ws.merge_cells(start_row=merge_start_row, start_column=col_idx, end_row=merge_end_row, end_column=col_idx)
 
 
-    new_path = os.path.join(path, "Supplementary_Outputs")
-    if not os.path.exists(new_path):
-        os.mkdir(new_path)
+
     # Save the updated Excel file
 
     combined_table_after_grouping_counts.to_csv(csv_file)
