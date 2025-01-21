@@ -26,34 +26,34 @@ def Argument_parser_function():
     # Create a group for required arguments
     required_group = parser.add_argument_group("required arguments")
     # Define the required arguments
-    required_group.add_argument("--subjID", required=True, help="Column name that holds subjectID information. Make sure the subjectID column name is the same across all input CSV files.")
+    required_group.add_argument("--subjID", required=True, help="Column name that indicates the subject ID information across all files input (e.g., –subjID subjectID). Must match across all input CSV files.")
     # Path to the text file, which have paths to each protocol results
-    required_group.add_argument("--DTIinputs", required=True, help="Path to text file which contains a list of absolute paths to each ENIGMA DTI pipeline output csv file.")
+    required_group.add_argument("--DTIinputs", required=True, help="Path to text file that contains a list of absolute paths to each ENIGMA DTI output CSV file. This should contain a minimum of 1 path, but can include more.")
     # Path where the csv file and results will be stored
-    required_group.add_argument("--output", required=True, default="", help="Path to where the output csv will be saved.") 
+    required_group.add_argument("--output", required=True, default="", help="Output path and prefix") 
 
 
     # For Diagnosis column and Site column
-    parser.add_argument("--demogCSV", required=False, help="Path to the csv file that contains demographic information(e.g. Age). This csv should contain columns for diagnosis group and site, if available.")#Used for forming 4 combinations for filtering. If no demographic file, outliers will be identified against the complete data.
-    parser.add_argument("--dx", required=False, help="Column name for diagnosis in demographic file, if applicable.") #Used for forming 4 combinations for filtering. If no demographic file, outliers will be identified across the complete data.
-    parser.add_argument("--site", required=False, help="Column name for site in demographic file, if applicable.")# Used for forming 4 combinations for filtering. If no demographic file, outliers will be identified against the complete data.
+    parser.add_argument("--demogCSV", required=False, help="If you would like site and diagnosis to be considered, path to CSV that contains columns for diagnosis group and site, if available. If not provided, only outliers across all diagnoses and sites will be considered.")#Used for forming 4 combinations for filtering. If no demographic file, outliers will be identified against the complete data.
+    parser.add_argument("--dx", required=False, help="If applicable, column name that indicates diagnosis information in –demogCSV (e.g., –dx Diagnosis). If not provided, only outliers across all diagnoses will be considered.") #Used for forming 4 combinations for filtering. If no demographic file, outliers will be identified across the complete data.
+    parser.add_argument("--site", required=False, help="If applicable, column name that indicates site or study information in –demogCSV (e.g., –site Site). If not provided, only outliers across all sites will be considered.")# Used for forming 4 combinations for filtering. If no demographic file, outliers will be identified against the complete data.
 
     #Quantile range which will be approved: For Stringent 0.5%-99.5% 
-    parser.add_argument("--quant1", required=False, type=float, nargs=2,  default=(0.005, 0.995), metavar=('VAL1', 'VAL2'), help="List of 2 numbers between 0 and 1 indicating the upper and lower quantile thresholds used to identify outliers (e.g. --quant1 .25 .75). NOTE: By default this is set to --quant1 .005 .995 such that ROI values < 0.5 %%ile or > 99.5 %%ile are flagged") 
+    parser.add_argument("--quant1", required=False, type=float, nargs=2,  default=(0.005, 0.995), metavar=('VAL1', 'VAL2'), help="List of 2 numbers between 0 and 1 indicating the upper and lower quantile thresholds used to identify outliers (e.g. –quant1 .25 .75). DEFAULT: –quant1 .005 .995") 
     # parser.add_argument("--lq_thresh1", required=False, default=0.005, help="Lower quantile threshold. Will flag ROIs below this. Default set to 0.005.")
     # parser.add_argument("--uq_thresh1", required=False, default=0.995, help="Upper quantile threshold. Will flag ROIs above this. Default set to 0.995") 
     
     # Stringent threshold of 10% of ROIs
-    parser.add_argument("--perc1", required=False, default=0.1, help="Percent of ROIs that must fall outside of lq_thresh1 and uq_thresh1 for subject to be flagged as an outlier. Default set to 0.1 (10%%).") #Threshold for flagging subjects which has atleast this many ROIs which were flagged outliers under Quantile range 1.
+    parser.add_argument("--perc1", required=False, default=0.1, help="Number between 0 and 1 indicating the percent of ROIs that must fall outside the thresholds defined by –quant1 in order to flag a subject as an outlier (e.g. –perc1 .5 indicates 50%). DEFAULT: –perc1 0.1") #Threshold for flagging subjects which has atleast this many ROIs which were flagged outliers under Quantile range 1.
 
 
     #Quantile range which will be approved: For Linient 0.1%-99.9%
-    parser.add_argument("--quant2", required=False, type=float, nargs=2,  default=(0.001, 0.999), metavar=('VAL1', 'VAL2'), help="List of 2 numbers between 0 and 1 indicating the upper and lower quantile thresholds used to identify outliers (e.g. --quant2 .25 .75). NOTE: By default this is set to --quant2 .001 .991 such that ROI values < 0.1 %%ile or > 99.9 %%ile are flagged") 
+    parser.add_argument("--quant2", required=False, type=float, nargs=2,  default=(0.001, 0.999), metavar=('VAL1', 'VAL2'), help="List of 2 numbers between 0 and 1 indicating the upper and lower quantile thresholds used to identify outliers (e.g. –quant2 .25 .75). DEFAULT: –quant2 .001 .999") 
     # parser.add_argument("--lq_thresh2", required=False, default=0.001, help="Lower quantile threshold. Will flag ROIs below this. Default set to 0.001") 
     # parser.add_argument("--uq_thresh2", required=False, default=0.999, help="Upper quantile threshold. Will flag ROIs above this. Default set to 0.999") 
     
     # Stringent threshold of 5% of ROIs
-    parser.add_argument("--perc2", required=False, default=0.05, help="Percent of ROIs that must fall outside of lq_thresh2 and uq_thresh2 for subject to be flagged as an outlier. Default set to 0.05 (5%%).") 
+    parser.add_argument("--perc2", required=False, default=0.05, help="Number between 0 and 1 indicating the percent of ROIs that must fall outside the thresholds defined by –quant2 in order to flag a subject as an outlier (e.g. –perc2 .5 indicates 50%). DEFAULT: –perc2 0.05") 
     
     
 
@@ -229,11 +229,12 @@ def Combined_Table_generator(input_file_path,subject_col, demogCSV,csv_combinati
     if demogCSV:
         # Read demography data
         demography=pd.read_csv(demogCSV)
+        demography = demography.dropna(subset=[grouping_dict_diag_site_instance.subject_col])
 
     subject_set=set()
     for file_i in all_csv_files:
         file_i=file_i.replace("\n","").replace("\r","")
-        subject_set=subject_set.union(set(pd.read_csv(file_i, usecols=[subject_col])[subject_col].tolist()))
+        subject_set=subject_set.union(set(pd.read_csv(file_i, usecols=[subject_col])[subject_col].dropna().tolist()))
 
 
     #Prepare the final dataframe which will have count for each combination
@@ -258,6 +259,7 @@ def Combined_Table_generator(input_file_path,subject_col, demogCSV,csv_combinati
         file_i=file_i.replace("\n","").replace("\r","")
         file_name_suffix=file_i.split("/")[-1].split(".")[0]
         ROI_DF=pd.read_csv(file_i)
+        ROI_DF = ROI_DF.dropna(subset=[grouping_dict_diag_site_instance.subject_col])
         ROI_DF.drop(columns=[grouping_dict_diag_site_instance.site_col,grouping_dict_diag_site_instance.diag_col], errors='ignore',inplace=True)
         
         # df_ROIs_col=[col for col in ROI_DF.columns.to_list() if col not in set_cols_checker] # Gets all the ROIs column and skips the Subject, Site and Diagnosis group columns
@@ -301,6 +303,10 @@ def Save_dataframe_function(combined_table_after_grouping,output_csv_folder):
     output_csv_folder is the path to the output file
     '''
 
+    splits = os.path.split(output_csv_folder)
+    path = "".join(splits[:-2])
+    prefix = splits[-1]
+
     grouping_dict_diag_site_instance=cnst.SingletonGrouping() #The instance was already created in the input_validator, so it return the same reference
     
     logger = logging.getLogger("MyAppLogger") # Get the logger that was set in the main() [Logger is a singleton]
@@ -322,9 +328,9 @@ def Save_dataframe_function(combined_table_after_grouping,output_csv_folder):
     outlier_subjects_string="\n".join(outlier_subjects_array)
 
     # Write the Subjects string to the file
-    with open(output_csv_folder+"_subjects.txt", "w") as file:
+    with open(output_csv_folder+"_SUMMARY_eDTI_outliers_subjects_flagged.txt", "w") as file:
         if len(outlier_subjects_array)>0:
-            file.write("Please check the following subjects: \n"+outlier_subjects_string)
+            file.write("The following subjects were flagged as outliers in one or more of the default or specified categorizations/criteria. We recommend further visual inspection of these subjects: \n"+outlier_subjects_string)
         else:
             file.write("No subjects were identified as outliers")
 
@@ -344,19 +350,20 @@ def Save_dataframe_function(combined_table_after_grouping,output_csv_folder):
     multi_index_col,    names=['', '', '']
     )
 
+    csv_file = os.path.join(new_path, f"{prefix}_eDTI_outliers_subjects_flagged_byCriteria.csv")
+    csv_roi_file = os.path.join(new_path, f"{prefix}_eDTI_outliers_ROIs_flagged_byCriteria.csv")
+    excel_file = os.path.join(new_path, f"{prefix}_eDTI_outliers_subjects_flagged_byCriteria.xlsx")
 
     # Saving as csv file
     combined_table_after_grouping_counts.columns = [col.replace("_","").replace("+","_") for col in combined_table_after_grouping_counts.columns]
     combined_table_after_grouping_names.columns = [col.replace("_","").replace("+","_").rstrip("_set") for col in combined_table_after_grouping_names.columns]
 
-    combined_table_after_grouping_counts.to_csv(output_csv_folder+".csv")
-    combined_table_after_grouping_names.to_csv(output_csv_folder+"_ROI_names.csv")
 
     combined_table_after_grouping_counts.reset_index(inplace=True)
     #Saving as Excel Workbook
     combined_table_after_grouping_counts.columns = columns_multiIndex
     combined_table_after_grouping_counts.reset_index(drop=True)
-    writer = pd.ExcelWriter(output_csv_folder+'.xlsx', engine='xlsxwriter')
+    writer = pd.ExcelWriter(excel_file, engine='xlsxwriter')
     combined_table_after_grouping_counts.to_excel(writer, sheet_name="Sheet1", merge_cells=True)
 
 
@@ -365,7 +372,7 @@ def Save_dataframe_function(combined_table_after_grouping,output_csv_folder):
     writer.close()
     
     # Use openpyxl to merge cells for single-level columns
-    wb = load_workbook(output_csv_folder+'.xlsx')
+    wb = load_workbook(excel_file)
     ws = wb.active
 
     header_levels = len(combined_table_after_grouping_counts.columns.levels)
@@ -378,13 +385,20 @@ def Save_dataframe_function(combined_table_after_grouping,output_csv_folder):
             ws.merge_cells(start_row=merge_start_row, start_column=col_idx, end_row=merge_end_row, end_column=col_idx)
 
 
+    new_path = os.path.join(path, "Supplementary_Outputs")
+    if not os.path.exists(new_path):
+        os.mkdir(new_path)
     # Save the updated Excel file
-    wb.save(output_csv_folder+'.xlsx')
+
+    combined_table_after_grouping_counts.to_csv(csv_file)
+    combined_table_after_grouping_names.to_csv(csv_roi_file)
+    wb.save(excel_file)
 
 
-    logger.info("CSV saved in {}".format(output_csv_folder+"_ROI_names.csv"))
-    logger.info("Excel saved in {}".format(output_csv_folder+".xlsx"))
-    logger.info("Outlier subjects are listed in {}".format(output_csv_folder+"_subjects.txt"))
+    logger.info("Outlier subjects are listed in {}".format(output_csv_folder+"_SUMMARY_eDTI_outliers_subjects_flagged.txt"))
+    logger.info("Excel saved in {}".format(excel_file))
+    logger.info("CSV saved in {}".format(csv_file))
+    logger.info("ROIs flagged CSV saved in {}".format(csv_roi_file))
 
 
    
@@ -404,7 +418,7 @@ def main():
     logger.setLevel(logging.INFO)  # Set the minimum log level to INFO
 
     # File handler
-    file_handler = logging.FileHandler(output_csv_folder+".log",  mode="w")
+    file_handler = logging.FileHandler(output_csv_folder+"_eDTI_outliers.log",  mode="w")
     file_handler.setLevel(logging.INFO)  # Ensure the handler respects the minimum level
     file_handler.setFormatter(logging.Formatter('%(message)s'))  # Keep only the message, don't add INFO DEBUG ERROR 
 
