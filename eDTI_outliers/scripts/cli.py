@@ -6,6 +6,7 @@ import logging
 import pandas as pd
 import numpy as np
 from openpyxl import load_workbook
+from pathlib import Path
 
 # from eDTI_outliers.scripts.filtering_algorithm import *
 # from eDTI_outliers.scripts.constants import *
@@ -303,10 +304,10 @@ def Save_dataframe_function(combined_table_after_grouping,output_csv_folder):
     output_csv_folder is the path to the output file
     '''
 
-    splits = os.path.split(output_csv_folder)
-    path = "".join(splits[:-2])
-    prefix = splits[-1]
-
+    output_path = Path(output_csv_folder)
+    path = str(output_path.parent)
+    prefix = output_path.name
+    
     grouping_dict_diag_site_instance=cnst.SingletonGrouping() #The instance was already created in the input_validator, so it return the same reference
     
     logger = logging.getLogger("MyAppLogger") # Get the logger that was set in the main() [Logger is a singleton]
