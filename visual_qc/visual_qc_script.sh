@@ -4,7 +4,6 @@
 
 ## ENIGMA-DTI TBSS QC SCRIPT(10/2024)
 ## Talia Nir, Elizabeth Haddad, Neda Jahanshad
-## [WHICH TALIA EMAIL] elizabeth.haddad@loni.usc.edu, neda.jahanshad@ini.usc.edu
 
 ###################################################################################################
 ########################################## EDIT ME ################################################
