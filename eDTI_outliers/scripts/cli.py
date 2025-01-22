@@ -416,6 +416,11 @@ def main():
     #Output file name
     output_csv_folder=args.output.rstrip("/")#+"/"+output_file_name
 
+    output_folder = Path(output_csv_folder)
+
+    if not os.path.exists(output_folder.parent):
+        os.makedirs(output_folder.parent)
+        
     # Create a named logger, so that it can be used in other functions and classes
     logger = logging.getLogger("MyAppLogger")
     logger.setLevel(logging.INFO)  # Set the minimum log level to INFO
