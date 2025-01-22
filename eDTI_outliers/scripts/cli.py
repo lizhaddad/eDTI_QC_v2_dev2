@@ -315,7 +315,7 @@ def Save_dataframe_function(combined_table_after_grouping,output_csv_folder):
     columns_with_ROI_counts=sorted([col for col in combined_table_after_grouping.columns if not col.endswith("_set")]) #Columns with only count of Outliers
 
     #For excel workbook, to save it with multiindex columns such that the resulting file will have lenient and Stringent as sub columns
-    Overall_outlier_count_across_groups="Outliers_Count" #Column which shows the number of combination out of 8 where that subject satisfied the threshold.
+    Overall_outlier_count_across_groups="Summary_(Across_Column_Total)" #Column which shows the number of combination out of 8 where that subject satisfied the threshold.
     column_sequence_counts=[Overall_outlier_count_across_groups]+columns_with_ROI_counts 
 
     #Count for each subject, to check how many times they were outliers across the combinations
