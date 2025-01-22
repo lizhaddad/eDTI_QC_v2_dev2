@@ -9,7 +9,7 @@
 ########################################## EDIT ME ################################################
 ###################################################################################################
 # (OPTIONAL MASTER DIRECTORY)
-dir=/ifs/loni/faculty/njahansh/nerds/ehaddad/ENIGMA/eDTI_qc_testing
+dir=/Users/enigma_DTI/projects/tbss/QC
 
 # PATH TO SUBJECT LIST TEXT FILE
 subject_list=${dir}/example_data/subject_list.txt
