@@ -35,8 +35,8 @@ class SingletonGrouping:
             self.threshold_2=float(threshold_2)
             print("***************************************************************")
             self.criteria_string_mapper={
-                                        criteria_1_string : "{}% of measures >{} or <{}]".format(self.threshold_1*100.0,self.quantile_stringent[0],self.quantile_stringent[1]),
-                                        criteria_2_string : "{}% of measures >{} or <{}]".format(self.threshold_2*100.0,self.quantile_lenient[0],self.quantile_lenient[1]),
+                                        criteria_1_string : "{}% of measures >{} or <{}".format(self.threshold_1*100.0,self.quantile_stringent[0],self.quantile_stringent[1]),
+                                        criteria_2_string : "{}% of measures >{} or <{}".format(self.threshold_2*100.0,self.quantile_lenient[0],self.quantile_lenient[1]),
                                         }
 
             self.grouping_criteria = {
