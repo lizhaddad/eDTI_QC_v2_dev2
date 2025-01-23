@@ -6,6 +6,7 @@ import logging
 import pandas as pd
 import numpy as np
 from openpyxl import load_workbook
+from openpyxl.styles import Alignment
 from pathlib import Path
 
 # from eDTI_outliers.scripts.filtering_algorithm import *
@@ -326,6 +327,7 @@ def Save_dataframe_function(combined_table_after_grouping,output_csv_folder):
 
     #Get array of subjects which has "Overall_outlier_count_across_groups">0
     outlier_subjects_array=combined_table_after_grouping.index[combined_table_after_grouping[Overall_outlier_count_across_groups]>0].to_numpy()
+    outlier_subjects_array.sort()
     outlier_subjects_string="\n".join(outlier_subjects_array)
 
     # Write the Subjects string to the file
@@ -390,10 +392,40 @@ def Save_dataframe_function(combined_table_after_grouping,output_csv_folder):
             ws.merge_cells(start_row=merge_start_row, start_column=col_idx, end_row=merge_end_row, end_column=col_idx)
 
 
+    # Sort Columns to subject Id
+    combined_table_after_grouping_counts.sort_values(combined_table_after_grouping_counts.columns[0], inplace=True)
+    combined_table_after_grouping_names.sort_index(inplace=True)
+
+    # Sort Excel WB
+    header_rows_count = 3
+
+    # Apply text-wrap alignment to all header cells
+    for row in ws.iter_rows(min_row=1, max_row=header_rows_count):
+        for cell in row:
+            if cell.value is not None:  # Ensure there's a value to format
+                cell.alignment = Alignment(
+                    wrap_text=True,
+                    horizontal='center',
+                    vertical='top'
+                    )
+
+    # Get all rows that are non-empty
+    non_empty_rows = [row for row in ws.iter_rows(min_row=header_rows_count + 1, values_only=True) if not all(value is None for value in row)]
+    non_empty_rows.sort(key=lambda x: x[1])
+
+    # Clear ws and repopulate with new rows
+    ws.delete_rows(header_rows_count + 1 , ws.max_row - header_rows_count)
+
+    for row_idx, row in enumerate(non_empty_rows, start=header_rows_count+1):
+        for col_idx, value in enumerate(row, start=1):
+            if col == 1:
+                continue
+            
+            ws.cell(row = row_idx, column = col_idx, value = value)
 
     # Save the updated Excel file
 
-    combined_table_after_grouping_counts.to_csv(csv_file)
+    combined_table_after_grouping_counts.to_csv(csv_file, index=False)
     combined_table_after_grouping_names.to_csv(csv_roi_file)
     wb.save(excel_file)
 
