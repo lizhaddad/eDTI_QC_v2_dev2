@@ -1,4 +1,16 @@
-# eDTI Outlier QC (?) ~~v2~~
+# Additional QC tools
+
+We offer additional QC tools in this submodule that may be used in conjunction with tools offered on the main Github page [link]. In brief, these include:
+
+1. **Statistical QC:** In this section, we provide a package to help to identify outliers at the statistical level. Subjects are flagged based on various criteria including number of DTI ROI measures that fall outside various %iles. We recommend that this package be used to flag subjects for further visual inspection and not to automatically exclude data. Data can be visualized using the main tools described on the main Github pageabove[link] or by using the additional tools from this submodule.  
+
+2. **Visual QC:** In this section, we provide an optional script that outputs a series of PNG images that may help to visually inspect problematic scans and/or registrations identified as outliers. These include images of: FA registrations to the ENIGMA template, FA values projected onto the ENIGMA template skeleton, and the diffusion scalar maps warped to the ENIGMA template.
+
+## Table of Contents
+- [Installation](#installation)
+- [Statistical QC](#statistical-qc)
+- [Visual QC](#visual-qc)
+
 
 ## Installation
 
@@ -18,17 +30,7 @@ Please follow the instructions below carefully to install the package.
 ### 5. After cloning (in the same directory that `git clone` was run in):
   `pip install ./eDTI_QC_v2_dev2`
 
-
 **_Note that this procedure only needs to be followed once. Once the installation is complete, you will only need to execute Step #4 before running either the [eDTI_outliers](https://github.com/lizhaddad/eDTI_QC_v2_dev2/tree/c0981c8c8230d0277c5641971ad2a3bc5d3a3b55/eDTI_outliers) package or the [visual_qc_script.sh](https://github.com/lizhaddad/eDTI_QC_v2_dev2/blob/31e6dd2c687266182acd51f54c1d222b1724d435/visual_qc/visual_qc_script.sh) described below._**
-
-## Outlier Detection
-
-We offer two additional forms of QC ~~in v2.0~~ that may be used in conjunction with tools offered~~in v1~~ on the [main ENIGMA TBSS page](https://github.com/ENIGMA-git/ENIGMA-DTI-TBSS-Protocol?tab=readme-ov-file#quality-control-protocols-v10): ${{\color{red}{\textsf{change link to header without "v1"}}}}\$
-
-
-1. **Statistical QC:** In this section, we provide a package to help to identify outliers at the statistical level. Subjects are flagged based on various criteria including number of DTI ROI measures that fall outside various %iles.
-
-2. **Visual QC:** In this section, we provide a script that outputs a series of PNG images that may help to visually identify problematic scans and/or registrations. These include: FA registrations to the ENIGMA template, FA values projected onto the ENIGMA template skeleton, and the diffusion scalar maps warped to the ENIGMA template.
 
 
 ## Statistical QC
@@ -62,20 +64,13 @@ The code first checks for outliers across all subjects inputted. By default, it 
 
 #### _Primary outputs_
 
-**`${prefix}_SUMMARY_eDTI_outliers_subjects_flagged.txt`**: main output text file specifying any subject flagged as an outlier with one or more criteria. We recommend further visual inspection of these subjects
+**`${prefix}_SUMMARY_eDTI_outliers_subjects_flagged.txt`**: main output text file specifying any subject flagged as an outlier with one or more criteria. We recommend further visual inspection of these subjects:
 
 <p align="center">
 <img src="https://github.com/lizhaddad/eDTI_QC_v2_dev2/blob/c0981c8c8230d0277c5641971ad2a3bc5d3a3b55/eDTI_outliers/images/example_main_output.png" width="90%" height="50%">
 </p>
 
 **`${prefix}_eDTI_outliers.log`**: text file log of the command, flags, and inputs used
-
-${{\color{red}\Huge{\textsf{this image will be removed}}}}\$
-
-<p align="center">
-<img src="https://github.com/lizhaddad/eDTI_QC_v2_dev2/blob/c0981c8c8230d0277c5641971ad2a3bc5d3a3b55/eDTI_outliers/images/example_log.png" width="90%" height="50%">
-</p>
-
 
 #### _Secondary outputs_
 
@@ -99,12 +94,6 @@ Additional information on the criteria for which each subject was flagged and th
 </p>
 
 **`Supplementary_Outputs/${prefix}_eDTI_outliers_subjects_flagged_byCriteria.csv`**: CSV with the same information as **`Supplementary_Outputs/${prefix}_eDTI_outliers_subjects_flagged_byCriteria.xlsx`** but saved in a format that is easier to filter and read into other packages.
-
-${{\color{red}\Huge{\textsf{this image will be removed}}}}\$
-
-<p align="center">
-<img src="https://github.com/lizhaddad/eDTI_QC_v2_dev2/blob/c0981c8c8230d0277c5641971ad2a3bc5d3a3b55/eDTI_outliers/images/example_csv.png" width="90%" height="50%">
-</p>
 
 **`Supplementary_Outputs/${prefix}_eDTI_outliers_ROIs_flagged_byCriteria.csv`**: CSV with the number of ROI measures that were identified as outliers replaced with a list of the specific ROIs that were flagged
 
