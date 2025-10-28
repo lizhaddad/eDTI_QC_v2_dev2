@@ -19,16 +19,16 @@ Please follow the instructions below carefully to install the package.
 ### 1. Ensure Conda is Installed. If Conda is not installed, download and install Miniconda from the official website [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html). 
   `conda --version`
 ### 2. Clone the repository:
-  `git clone https://github.com/lizhaddad/eDTI_QC_v2_dev2.git`
+  `git clone https://github.com/lizhaddad/eDTI_additional_QC.git`
 
 ### 3. After Miniconda has been installed, run the following command to create the environment:
-  `conda env create -f eDTI_QC_v2_dev2/environment.yaml`
+  `conda env create -f eDTI_additional_QC/environment.yaml`
 
 ### 4. Once the environement is created, run the following command to activate environment:
   `conda activate ENIGMA_DTI_env`
 
 ### 5. After cloning (in the same directory that `git clone` was run in):
-  `pip install ./eDTI_QC_v2_dev2`
+  `pip install ./eDTI_additional_QC`
 
 **_Note that this procedure only needs to be followed once. Once the installation is complete, you will only need to execute Step #4 before running either the [eDTI_outliers](https://github.com/lizhaddad/eDTI_QC_v2_dev2/tree/c0981c8c8230d0277c5641971ad2a3bc5d3a3b55/eDTI_outliers) package or the [visual_qc_script.sh](https://github.com/lizhaddad/eDTI_QC_v2_dev2/blob/31e6dd2c687266182acd51f54c1d222b1724d435/visual_qc/visual_qc_script.sh) described below._**
 
