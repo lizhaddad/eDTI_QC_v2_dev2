@@ -1,5 +1,10 @@
 # Additional QC tools
 
+Talia Nir, Elizabeth Haddad, Ankush Shetty, Aarya Vakharia, Neda Jahanshad
+##### (Last update October 2025)
+
+
+
 We offer additional QC tools in this submodule that may be used in conjunction with tools offered on the [main Github page](https://github.com/ENIGMA-git/ENIGMA-DTI-TBSS-Protocol?tab=readme-ov-file#quality-control-protocols). In brief, these include:
 
 1. **Statistical QC:** In this section, we provide a package to help to identify outliers at the statistical level. Subjects are flagged based on various criteria including number of DTI ROI measures that fall outside various %iles. We recommend that this package be used to flag subjects for further visual inspection and not to automatically exclude data. Data can be visualized using the main tools described on the [main Github page](https://github.com/ENIGMA-git/ENIGMA-DTI-TBSS-Protocol?tab=readme-ov-file#quality-control-protocols) or by using the additional tools from this submodule.  
