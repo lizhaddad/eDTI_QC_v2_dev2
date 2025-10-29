@@ -1,4 +1,4 @@
-# Additional QC tools
+# Additional QC tools 
 
 We offer additional QC tools in this submodule that may be used in conjunction with tools offered on the main Github [page](https://github.com/ENIGMA-git/ENIGMA-DTI-TBSS-Protocol?tab=readme-ov-file#quality-control-protocols). In brief, these include:
 
