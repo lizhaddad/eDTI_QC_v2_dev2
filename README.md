@@ -1,8 +1,8 @@
-# Additional QC tools 
+# Additional QC tools
 
-We offer additional QC tools in this submodule that may be used in conjunction with tools offered on the main Github [page](https://github.com/ENIGMA-git/ENIGMA-DTI-TBSS-Protocol?tab=readme-ov-file#quality-control-protocols). In brief, these include:
+We offer additional QC tools in this submodule that may be used in conjunction with tools offered on the [main Github page](https://github.com/ENIGMA-git/ENIGMA-DTI-TBSS-Protocol?tab=readme-ov-file#quality-control-protocols). In brief, these include:
 
-1. **Statistical QC:** In this section, we provide a package to help to identify outliers at the statistical level. Subjects are flagged based on various criteria including number of DTI ROI measures that fall outside various %iles. We recommend that this package be used to flag subjects for further visual inspection and not to automatically exclude data. Data can be visualized using the main tools described on the main Github pageabove[link] or by using the additional tools from this submodule.  
+1. **Statistical QC:** In this section, we provide a package to help to identify outliers at the statistical level. Subjects are flagged based on various criteria including number of DTI ROI measures that fall outside various %iles. We recommend that this package be used to flag subjects for further visual inspection and not to automatically exclude data. Data can be visualized using the main tools described on the [main Github page](https://github.com/ENIGMA-git/ENIGMA-DTI-TBSS-Protocol?tab=readme-ov-file#quality-control-protocols) or by using the additional tools from this submodule.  
 
 2. **Visual QC:** In this section, we provide an optional script that outputs a series of PNG images that may help to visually inspect problematic scans and/or registrations identified as outliers. These include images of: FA registrations to the ENIGMA template, FA values projected onto the ENIGMA template skeleton, and the diffusion scalar maps warped to the ENIGMA template.
 
