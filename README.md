@@ -1,6 +1,6 @@
 # Additional QC tools
 
-We offer additional QC tools in this submodule that may be used in conjunction with tools offered on the main Github page [link]. In brief, these include:
+We offer additional QC tools in this submodule that may be used in conjunction with tools offered on the main Github [page](https://github.com/ENIGMA-git/ENIGMA-DTI-TBSS-Protocol?tab=readme-ov-file#quality-control-protocols). In brief, these include:
 
 1. **Statistical QC:** In this section, we provide a package to help to identify outliers at the statistical level. Subjects are flagged based on various criteria including number of DTI ROI measures that fall outside various %iles. We recommend that this package be used to flag subjects for further visual inspection and not to automatically exclude data. Data can be visualized using the main tools described on the main Github pageabove[link] or by using the additional tools from this submodule.  
 
@@ -30,7 +30,7 @@ Please follow the instructions below carefully to install the package.
 ### 5. After cloning (in the same directory that `git clone` was run in):
   `pip install ./eDTI_additional_QC`
 
-**_Note that this procedure only needs to be followed once. Once the installation is complete, you will only need to execute Step #4 before running either the [eDTI_outliers](https://github.com/lizhaddad/eDTI_QC_v2_dev2/tree/c0981c8c8230d0277c5641971ad2a3bc5d3a3b55/eDTI_outliers) package or the [visual_qc_script.sh](https://github.com/lizhaddad/eDTI_QC_v2_dev2/blob/31e6dd2c687266182acd51f54c1d222b1724d435/visual_qc/visual_qc_script.sh) described below._**
+**_Note that this procedure only needs to be followed once. Once the installation is complete, you will only need to execute Step #4 before running either the [eDTI_outliers](https://github.com/lizhaddad/eDTI_additional_QC/tree/main/eDTI_outliers) package or the [visual_qc_script.sh](https://github.com/lizhaddad/eDTI_additional_QC/blob/main/visual_qc/visual_qc_script.sh) described below._**
 
 
 ## Statistical QC
